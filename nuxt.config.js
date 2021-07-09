@@ -58,14 +58,30 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     icon: {
-      source: '/static/logos/icon.png'
+      source: './static/logos/icon.png'
     },
     meta: {
-      name: 'FourP'
+      name: 'FourP',
+      theme_color: '#2AB4FC'
     },
     manifest: {
-      lang: 'es'
-    }
+      lang: 'es',
+      name: 'FourP',
+      description: 'FourP Web',
+      short_name: 'FourP',
+      display: 'standalone',
+      start_url: '/'
+    },
+    workbox: {
+      runtimeCaching: [
+        {
+          urlPattern: 'https://fonts.googleapis.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+        }
+      ]
+    },
   },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content

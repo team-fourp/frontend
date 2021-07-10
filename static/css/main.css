@@ -1,0 +1,17 @@
+@layer utilities {
+  .background-white-important {
+    background: #fff !important;
+  }
+}
+
+[type="search"]:not(:placeholder-shown) {
+  @apply background-white-important;
+}
+
+:root {
+  --height-header: 3.5rem;
+}
+
+body {
+  background: red;
+}

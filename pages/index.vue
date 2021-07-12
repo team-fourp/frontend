@@ -8,6 +8,22 @@
 </template>
 
 <script>
+import dynamicMetadata from '~/plugins/metadata/metadata-dynamic'
+
 export default {
+  head() {
+    const title = 'FourP: Una mirada hacia lo diferente'
+    const url = `${this.$config.baseURL}${this.$nuxt.$route.path}`
+    const description = 'En FourP buscamos una mirada hacia lo diferente, transformando la educación actual y generando más oportunidades para nuestra comunidad.'
+    const dynamicMeta = dynamicMetadata({
+      title,
+      description,
+      url
+    })
+    return {
+      title,
+      meta: [...dynamicMeta]
+    }
+  }
 }
 </script>

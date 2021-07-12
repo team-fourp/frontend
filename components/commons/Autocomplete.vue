@@ -14,7 +14,7 @@
       @focus="onFocus"
     />
     <div v-show="isOpen"
-      class="absolute top-8 left-0 w-full container-search-result"
+      class="absolute left-0 w-full container-search-result"
       :class="{ 'top-8': !isInHeaderMobile, 'top-12': isInHeaderMobile }">
       <ul
         v-show="isOpen"
@@ -225,6 +225,6 @@ export default {
 }
 
 .input-search {
-  background: url('@/static/ui/search.svg') center right 1rem/1rem no-repeat;
+  background: url('@/static/icons/search.svg') center right 1rem/1rem no-repeat;
 }
 </style>

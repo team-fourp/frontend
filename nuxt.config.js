@@ -1,13 +1,21 @@
+import metadata from './plugins/metadata/metadata'
+import metadataDynamic from './plugins/metadata/metadata-dynamic'
+import metadataStatic from './plugins/metadata/metadata-static'
+import sitemaps from './plugins/utils/sitemaps'
+
 export default {
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL,
+    apiURL: process.env.BASE_API_URL
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'FourP',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'En FourP buscamos una mirada hacia lo diferente, transformando la educación actual y generando más oportunidades para nuestra comunidad.' },
-      { name: 'format-detection', content: 'telephone=no' }
-    ],
+    title: metadata.tags.title,
+    titleTemplate: metadata.tags.titleTemplate,
+    htmlAttrs: {
+      lang: metadata.settings.locale,
+    },
+    meta: [...metadataStatic(), ...metadataDynamic()],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/logos/favicon.ico' },
       // add montserrat font
@@ -21,6 +29,12 @@ export default {
     './static/css/main.css'
   ],
 
+  loading: {
+    color: '#2AB4FC',
+    height: '2px',
+  },
+
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: './plugins/utils/helpers', mode: 'client' }
@@ -30,7 +44,8 @@ export default {
   components: {
     dirs: [
       '~/components',
-      '~/components/commons'
+      '~/components/commons',
+      '~/components/special'
     ]
   },
 
@@ -43,7 +58,11 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
     // https://color-mode.nuxtjs.org/
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    // https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/dotenv',
+    // https://html-validator.nuxtjs.org/
+    '@nuxtjs/html-validator',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -55,12 +74,25 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     // https://www.npmjs.com/package/@nuxtjs/svg
-    '@nuxtjs/svg'
+    '@nuxtjs/svg',
+    // https://www.npmjs.com/package/@nuxtjs/robots
+    '@nuxtjs/robots',
+    // https://sitemap.nuxtjs.org/guide/setup
+    '@nuxtjs/sitemap',
+    // https://gitlab.com/broj42/nuxt-lazy-load
+    'nuxt-lazy-load',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:3000'
+    baseURL: process.env.BASE_API_URL,
+    credentials: true,
+    headers: {
+      common: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Access-Control-Allow-Origin': '*',
+      },
+    },
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -69,14 +101,18 @@ export default {
       source: './static/logos/icon.png'
     },
     meta: {
-      name: 'FourP',
-      theme_color: '#2AB4FC'
+      name: metadata.tags.title,
+      theme_color: metadata.settings.color,
+      lang: metadata.settings.lang,
+      ogSiteName: metadata.og.siteName,
+      ogImage: metadata.og.image.url,
+      ogUrl: metadata.og.url
     },
     manifest: {
-      lang: 'es',
-      name: 'FourP',
+      lang: metadata.settings.lang,
+      name: metadata.tags.title,
       description: 'FourP Web',
-      short_name: 'FourP',
+      short_name: metadata.tags.title,
       display: 'standalone',
       start_url: '/'
     },
@@ -95,6 +131,50 @@ export default {
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
 
+  //  Sitemap module configuration
+  sitemap: {
+    path: '/sitemap.xml',
+    hostname: process.env.BASE_URL,
+    cacheTime: 1000 * 60 * 15,
+    gzip: true,
+    exclude: metadata.settings.disallow.split(','),
+    sitemaps: sitemaps()
+  },
+
+  //  Nuxt lazy load configuration
+  'nuxt-lazy-load': {
+    directiveOnly: true,
+    loadingClass: 'isLoading',
+    loadedClass: 'isLoaded',
+    appendClass: 'lazyLoad',
+  },
+
+
+  // Html validator configuration
+  htmlValidator: {
+    usePrettier: false,
+    options: {
+      extends: [
+        'html-validate:document',
+        'html-validate:recommended',
+        'html-validate:standard',
+      ],
+      rules: {
+        'svg-focusable': 'off',
+        'no-unknown-elements': 'error',
+        // Conflicts or not needed as we use prettier formatting
+        'void-style': 'off',
+        'no-trailing-whitespace': 'off',
+        // Conflict with Nuxt defaults
+        'require-sri': 'off',
+        'attribute-boolean-style': 'off',
+        'doctype-style': 'off',
+        // Unreasonable rule
+        'no-inline-style': 'off',
+      },
+    },
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     postcss: {
@@ -104,6 +184,7 @@ export default {
     }
   },
 
+  // Color mode configuration
   colorMode: {
     preference: 'light',
     fallback: 'dark',

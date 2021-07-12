@@ -1,16 +1,11 @@
 <template>
   <header
-    class="fixed top-0 left-0 z-20 w-full flex items-center content-center bg-white">
+    class="fixed top-0 left-0 z-20 w-full flex items-center content-center bg-white dark:bg-dark-header">
     <div class="flex items-center content-center w-full h-full relative py-3 px-2 lg:px-4">
       <!-- Icon of menu -->
-      <button class="lg:hidden w-8 h-8" @click="isShowMenu = true">
+      <button type="button" class="lg:hidden w-8 h-8" @click="isShowMenu = true">
         <!-- <img src="@/static/ui/menu.svg" alt="Menu icon" > -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-          <line x1="4" y1="6" x2="20" y2="6" />
-          <line x1="4" y1="12" x2="20" y2="12" />
-          <line x1="4" y1="18" x2="20" y2="18" />
-        </svg>
+        <MenuIcon />
       </button>
       <Logotype class="ml-2" />
 
@@ -18,12 +13,17 @@
 
       <div class="ml-auto flex items-center content-center lg:hidden">
         <button
+          type="button"
           class="cursor-pointer w-8 h-8 flex items-center justify-center"
           @click="showInputSearchMobile = true">
-          <img src="@/static/ui/search.svg" alt="Search icon">
+          <img src="@/static/icons/search.svg" alt="Search icon">
         </button>
-        <button v-if="false" class="lg:hidden w-8 h-8 ml-2" @click="isShowMenu = true">
-          <img src="@/static/ui/menu.svg" alt="Menu icon">
+        <button
+          v-if="false"
+          type="button"
+          class="lg:hidden w-8 h-8 ml-2"
+          @click="isShowMenu = true">
+          <img src="@/static/icons/menu.svg" alt="Menu icon">
         </button>
         <div class="main-search">
           <div
@@ -34,13 +34,11 @@
             }"
             >
             <button
+              type="button"
               class="cursor-pointer mr-1"
               :class="{ 'block': showInputSearchMobile, 'hidden': !showInputSearchMobile }"
               @click="showInputSearchMobile = false">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" />
-              </svg>
+              <ArrowBackIcon />
             </button>
             <Autocomplete
               v-show="showInputSearchMobile"
@@ -78,13 +76,15 @@
 
       <!-- Buttons signin / signup (laptop) -->
       <div class="hidden lg:block">
-        <button class="px-3 max-w-lg rounded bg-blue-600 py-1">
+        <button type="button" class="px-3 max-w-lg rounded bg-blue-600 py-1">
           <span class="text-sm font-bolder text-white">Inicia sesión</span>
         </button>
-        <button class="px-3 max-w-lg rounded bg-red-600 py-1">
+        <button type="button" class="px-3 max-w-lg rounded bg-red-600 py-1">
           <span class="text-sm font-bolder text-white">Comenzar aventura</span>
         </button>
       </div>
+
+      <color-switcher class="ml-1"></color-switcher>
 
       <!-- Lateral menu -->
       <div
@@ -98,8 +98,8 @@
           <div class="flex items-center px-2">
             <img src="@/static/logos/icon.svg" alt="FourP logo" width="32" class="sm:hidden">
             <span class="font-bold ml-1 text-sm sm:text-base">Menú</span>
-            <button class="ml-auto" @click="isShowMenu = false">
-              <img src="@/static/ui/x.svg" alt="Icon close menu">
+            <button type="button" class="ml-auto" @click="isShowMenu = false">
+              <img src="@/static/icons/x.svg" alt="Icon close menu">
             </button>
           </div>
           <!-- Links lateral menu -->
@@ -111,7 +111,7 @@
               <nuxt-link :to="item.href"
                 class="py-3 px-2 hover:bg-gray-200 h-full flex items-center">
                 <img
-                  :src="require(`@/static/ui/${item.iconName}.svg`)"
+                  :src="require(`@/static/icons/${item.iconName}.svg`)"
                   class="inline"
                   width="24"
                   :alt="`Icon ${item.title}`">
@@ -124,11 +124,11 @@
 
           <!-- Buttons lateral menu -->
           <div class="w-full bottom-0 absolute left-0 flex flex-col items-center px-2 pb-4">
-            <button class="w-full max-w-lg rounded bg-blue-600 py-1 mb-2">
+            <button type="button" class="w-full max-w-lg rounded bg-blue-600 py-1 mb-2">
               <span class="text-sm font-bolder text-white">Inicia sesión</span>
             </button>
 
-            <button class="w-full max-w-lg  rounded bg-purple-700 py-1">
+            <button type="button" class="w-full max-w-lg  rounded bg-purple-700 py-1">
               <span class="text-sm font-bolder text-white">Regístrate</span>
             </button>
           </div>
@@ -139,6 +139,7 @@
 </template>
 
 <script>
+import ColorSwitcher from './special/ColorSwitcher.vue';
 const items = [
   { iconName: 'courses', title: 'Cursos', href: '/cursos' },
   { iconName: 'certificate', title: 'Freelances', href: '/freelances' },
@@ -146,6 +147,11 @@ const items = [
 ]
 
 export default {
+  components: {
+    ColorSwitcher,
+    MenuIcon: () => import('@/static/icons/menu.svg?inline'),
+    ArrowBackIcon: () => import('@/static/icons/arrow-back.svg?inline')
+  },
   data() {
     return {
       items,

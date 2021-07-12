@@ -9,11 +9,14 @@ module.exports = {
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
-      /* colors: {
-        'gray-main': {
-          700: '#f2394f'
+      colors: {
+        blue: {
+          'dark': '#2AB4FC'
+        },
+        dark: {
+          header: '#000729'
         }
-      }, */
+      },
       fontFamily: {
         sans: ['Montserrat'],
         serif: ['Montserrat'],

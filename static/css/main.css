@@ -1,11 +1,31 @@
+@tailwind utilities;
+
 @layer utilities {
   .background-white-important {
     background: #fff !important;
   }
+  .w-full-2rem {
+    width: calc(100% - 2rem);
+  }
+  .block-lg {
+    @apply mb-8 mt-0;
+  }
+  .title {
+    @apply text-center font-extrabold text-light-font-title dark:text-dark-font-title text-2xl lg:text-3xl;
+  }
+  .subtitle {
+    @apply font-extrabold text-xl text-light-font-title dark:text-dark-font-title lg:text-2xl;
+  }
+  .block-main {
+    @apply grid ml-auto mr-auto max-w-6xl w-full-2rem xl:w-full;
+  }
+  .t3 {
+    @apply font-bold text-lg;
+  }
 }
 
 [type="search"]:not(:placeholder-shown) {
-  @apply background-white-important;
+  @apply background-white-important dark:bg-dm-dark-accent !important;
 }
 
 :root {
@@ -13,5 +33,51 @@
 }
 
 body {
-  background: red;
+  margin-top: var(--height-header);
+  font-family: 'Montserrat', sans-serif;
+  min-height: calc(100vh - var(--height-header));
+  @apply relative text-light-font bg-light-background dark:text-dark-font dark:bg-dm-dark flex flex-col;
+}
+
+body::-webkit-scrollbar {
+  @apply block w-2.5 h-2;
+}
+
+body::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-500 rounded;
+}
+
+body::-webkit-scrollbar-track {
+  @apply bg-gray-200 dark:bg-gray-400 rounded;
+}
+
+/* ----- Overrides ---- */
+
+.link {
+  @apply text-blue-600 font-medium hover:underline;
+}
+
+.button-social {
+  @apply py-2 rounded cursor-pointer font-bold text-sm md:text-base;
+}
+
+.button-fb {
+  background-color: #1877f2;
+  color: white;
+}
+
+.button-fb:hover {
+  background-color: #166fe5;
+}
+
+.button-gg {
+  background-color: #f1f1f1;
+}
+
+.button-gg:hover {
+  background-color: #eee;
+}
+
+.input-form {
+  @apply w-full mb-3;
 }

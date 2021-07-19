@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <Header />
-    <p v-for="i in 20" :key="i">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur quia beatae veritatis aliquam similique atque repellendus commodi quibusdam animi, error excepturi delectus ea expedita nobis. Cupiditate enim modi esse deserunt!
-    </p>
-  </div>
+  <main class="block-main">
+    <div class="block-lg"></div>
+    <h1 class="title">Bienvenido a FourP</h1>
+  </main>
 </template>
 
 <script>

@@ -1,18 +1,21 @@
 <template>
-  <div class="w-full" :class="{ 'relative': !isInHeaderMobile }">
-    <input
-      ref="searchInput"
-      :value="search"
-      type="search"
-      class="input-search pl-3 pr-2 py-2 text-xs border border-gray-300 w-full rounded focus:outline-none focus:border-gray-400"
-      placeholder="¿Cúal será tu nueva aventura?"
-      @input="onChange"
-      @keydown.down="onArrowDown"
-      @keydown.up="onArrowUp"
-      @keydown.enter="onEnter"
-      @keydown.prevent.esc="onEscape"
-      @focus="onFocus"
-    />
+  <div class="w-full bg-white dark:bg-dm-dark-accent" :class="{ 'relative': !isInHeaderMobile }">
+    <label>
+      <input
+        ref="searchInput"
+        :value="search"
+        type="search"
+        autocomplete="off"
+        class="input-search pl-3 pr-2 py-2 text-xs border border-gray-300 w-full rounded focus:outline-none focus:border-gray-400 dark:border-gray-700"
+        placeholder="¿Cúal será tu nueva aventura?"
+        @input="onChange"
+        @keydown.down="onArrowDown"
+        @keydown.up="onArrowUp"
+        @keydown.enter="onEnter"
+        @keydown.prevent.esc="onEscape"
+        @focus="onFocus"
+      />
+    </label>
     <div v-show="isOpen"
       class="absolute left-0 w-full container-search-result"
       :class="{ 'top-8': !isInHeaderMobile, 'top-12': isInHeaderMobile }">
@@ -20,7 +23,7 @@
         v-show="isOpen"
         ref="ulContainerList"
         style="scroll-behavior: smooth;"
-        class="w-full max-h-full bg-white border border-gray-200 scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+        class="w-full max-h-full bg-white border border-gray-200 scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-200 scrollbar-track-gray-100 dark:scrollbar-thumb-gray-500 dark:scrollbar-track-gray-400  dark:bg-dm-darker dark:border-gray-600"
       >
         <li
           v-if="isLoading"
@@ -36,7 +39,7 @@
           :key="i"
           :ref="`item-result-${i}`"
           tabindex="1"
-          class="text-sm cursor-pointer hover:bg-gray-200 focus:bg-gray-300"
+          class="text-sm cursor-pointer hover:bg-gray-200 focus:bg-gray-300 dark:hover:bg-gray-700"
           :class="{
             'is-active': i === arrowCounter,
             'py-2 px-2': variant !== 'header'
@@ -125,7 +128,8 @@ export default {
   },
   methods: {
     setResult(result) {
-      this.search = result;
+      this.search = '';
+      this.results = [];
       this.isOpen = false;
     },
     filterResults() {
@@ -154,6 +158,7 @@ export default {
       if (this.isAsync) {
         this.isLoading = true;
       } else {
+        this.arrowCounter = -1;
         this.filterResults();
         this.isOpen = true;
       }
@@ -169,7 +174,6 @@ export default {
 
       if (this.arrowCounter < this.results.length - 1) {
         this.arrowCounter = this.arrowCounter + 1;
-        this.search = this.results[this.arrowCounter].title;
         if (this.arrowCounter % 5 === 0) {
           // eslint-disable-next-line no-unused-expressions
           this.$refs.ulContainerList.childNodes[this.arrowCounter].scrollIntoView(true);
@@ -186,7 +190,6 @@ export default {
       } else if (this.arrowCounter > 0) {
         e.preventDefault()
         this.arrowCounter = this.arrowCounter - 1;
-        this.search = this.results[this.arrowCounter].title;
         if (this.arrowCounter % 5 ===  0 && this.arrowCounter >= 5) {
           this.$refs.ulContainerList.childNodes[this.arrowCounter - 5].scrollIntoView(true);
         } else if (this.arrowCounter < 5) {
@@ -215,16 +218,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="postcss">
 .container-search-result {
   height: 360px;
 }
 
 .is-active {
-  @apply bg-gray-300;
+  @apply bg-gray-300 dark:bg-gray-600;
 }
 
 .input-search {
-  background: url('@/static/icons/search.svg') center right 1rem/1rem no-repeat;
+  background: url('/icons/search.svg') center right 1rem/1rem no-repeat;
 }
 </style>

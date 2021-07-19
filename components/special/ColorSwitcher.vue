@@ -1,7 +1,6 @@
 <template>
-  <button
-    type="button"
-    class="transition-colors duration-100 rounded-md hover:bg-gray-100 hover:bg-opacity-10"
+  <div
+    class="rounded-md cursor-pointer hover:bg-gray-100 hover:bg-opacity-10"
     title="Cambiar de modo"
     @click="switchColorMode()"
   >
@@ -13,7 +12,7 @@
       v-else
       class="w-8 h-8 text-yellow-500"
      />
-  </button>
+  </div>
 </template>
 
 <script>

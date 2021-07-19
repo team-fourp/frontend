@@ -19,7 +19,10 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/logos/favicon.ico' },
       // add montserrat font
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat' }
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800'
+      }
     ]
   },
 
@@ -71,16 +74,14 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    // https://go.nuxtjs.dev/content
-    '@nuxt/content',
     // https://www.npmjs.com/package/@nuxtjs/svg
     '@nuxtjs/svg',
     // https://www.npmjs.com/package/@nuxtjs/robots
     '@nuxtjs/robots',
     // https://sitemap.nuxtjs.org/guide/setup
     '@nuxtjs/sitemap',
-    // https://gitlab.com/broj42/nuxt-lazy-load
-    'nuxt-lazy-load',
+    // https://portal-vue.linusb.org/guide/getting-started.html
+    'portal-vue/nuxt'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -128,9 +129,6 @@ export default {
     },
   },
 
-  // Content module configuration: https://go.nuxtjs.dev/config-content
-  content: {},
-
   //  Sitemap module configuration
   sitemap: {
     path: '/sitemap.xml',
@@ -171,6 +169,7 @@ export default {
         'doctype-style': 'off',
         // Unreasonable rule
         'no-inline-style': 'off',
+        // 'element-required-attributes': ''
       },
     },
   },

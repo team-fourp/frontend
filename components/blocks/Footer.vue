@@ -49,7 +49,7 @@
               </nuxt-link>
             </li>
             <li class="item-list">
-              <nuxt-link to="/registro">
+              <nuxt-link to="/enseña">
                 Enseña en FourP
               </nuxt-link>
             </li>

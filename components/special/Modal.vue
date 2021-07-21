@@ -1,7 +1,7 @@
 <template>
-  <portal v-if="isOpen" to="modal-target">
+<!--   <portal v-if="isOpen" :to="target"> -->
     <div
-      v-show="isOpen"
+      v-if="isOpen"
       class="modal-outer transition-all duration-300 delay-300"
       @keypress.esc="isOpen = false">
       <div
@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-  </portal>
+<!--   </portal> -->
 </template>
 
 <script>
@@ -79,6 +79,10 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    target: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -106,8 +110,8 @@ export default {
         }
       })
     },
-    hide() {
-      document.body.classList.remove('overflow-hidden')
+    hide(type) {
+      if (type !== 'login' && type !== 'register' ) document.body.classList.remove('overflow-hidden')
       this.isOpen = false
     },
     close(e) {
@@ -123,7 +127,7 @@ export default {
       this.$emit('close')
     },
     handlerEscape(e) {
-      if (e.key === 'Escape') {
+      if (e && e.key === 'Escape') {
         this.closeByButton()
       }
     }

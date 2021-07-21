@@ -170,7 +170,7 @@ import ModalRegister from '../sections/ModalRegister.vue'
 const items = [
   { icon: 'CoursesIcon', title: 'Cursos', href: '/cursos' },
   { icon: 'FreelancesIcon', title: 'Freelances', href: '/freelances' },
-  { icon: 'RocketIcon', title: 'Únetenos', href: '/registro' },
+  { icon: 'RocketIcon', title: 'Únetenos', href: '/enseña' },
 ]
 
 export default {

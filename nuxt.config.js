@@ -48,7 +48,8 @@ export default {
     dirs: [
       '~/components',
       '~/components/commons',
-      '~/components/special'
+      '~/components/special',
+      '~/components/commons/input'
     ]
   },
 

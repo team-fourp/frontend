@@ -2,10 +2,12 @@
   <Modal
     :id="`component-${id}`"
     :ref="`component-${id}`"
+    target="modal-login"
     title="Inicia sesión"
     :footer="false"
     size="sm"
-    class="scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-200 scrollbar-track-gray-100 dark:scrollbar-thumb-gray-500 dark:scrollbar-track-gray-400">
+    @close="onClose"
+    >
     <p class="font-bold text-sm">
       Inicia usando una de tus redes
     </p>
@@ -28,19 +30,23 @@
     </p>
     <div class="divide-y">
       <form class="mb-2">
-        <div class="input-form">
-          <label for="email" class="font-medium text-sm mb-1">
-            Correo electrónico
-          </label>
-          <Input id="email" type="email" placeholder="Ingresa tu correo electrónico"/>
-        </div>
-        <div class="input-form">
-          <label for="password" class="font-medium text-sm mb-1">
-            Contraseña
-          </label>
-          <Input id="password" type="password" placeholder="Ingresa tu contraseña"/>
-        </div>
-        <Button variant="primary" size="block" class="mt-2">
+        <Input
+          v-model="email"
+          id-input="login-email"
+          type="email"
+          placeholder="Ingresa tu correo electrónico"
+          label="Correo electrónico"/>
+        <Input
+          v-model="password"
+          id-input="login-password"
+          type="password"
+          placeholder="Ingresa tu contraseña"
+          label="Contraseña"/>
+        <Button
+          type="submit"
+          variant="primary"
+          size="block"
+          class="mt-6">
           Iniciar sesión
         </Button>
       </form>
@@ -73,13 +79,23 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
   methods: {
     open(){
       this.$refs[`component-${this.id}`].open()
     },
     clickToRegister() {
       this.$emit('changeToRegister')
-      this.$refs[`component-${this.id}`].hide()
+      this.$refs[`component-${this.id}`].hide('login')
+    },
+    onClose() {
+      this.email = ''
+      this.password = ''
     }
   }
 }

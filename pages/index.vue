@@ -1,7 +1,18 @@
 <template>
-  <main class="block-main">
-    <div class="block-lg"></div>
-    <h1 class="title">Bienvenido a FourP</h1>
+  <main>
+    <section class="home-banner">
+      <div class="home-banner-content block-main fade">
+        <div class="col-span-6 h-full flex items-center justify-center">
+          <h1 class="text-6xl font-extrabold">
+            Aprende, enseña y transforma
+          </h1>
+        </div>
+        <div class="col-span-5 overflow-hidden rounded-lg">
+          <div class="container-img">
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -25,3 +36,15 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="postcss">
+.home-banner {
+  min-height: calc(100vh - var(--height-header));
+  @apply bg-gradient-to-r pt-8 from-blue-400 via-indigo-500 to-purple-500;
+}
+
+.home-banner-content {
+  @apply h-full w-full grid grid-cols-12;
+}
+
+</style>

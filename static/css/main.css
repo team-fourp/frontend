@@ -22,21 +22,19 @@
   .t3 {
     @apply font-bold text-lg;
   }
+  .min-h-screen-with-topbar {
+    min-height: calc(100vh - var(--height-header));
+  }
 }
 
 [type="search"]:not(:placeholder-shown) {
   @apply background-white-important dark:bg-dm-dark-accent !important;
 }
 
-:root {
-  --height-header: 3.5rem;
-}
-
 body {
   margin-top: var(--height-header);
   font-family: 'Montserrat', sans-serif;
-  min-height: calc(100vh - var(--height-header));
-  @apply relative text-light-font bg-light-background dark:text-dark-font dark:bg-dm-dark flex flex-col;
+  @apply relative min-h-screen-with-topbar text-light-font bg-light-background dark:text-dark-font dark:bg-dm-dark flex flex-col;
 }
 
 body::-webkit-scrollbar {

@@ -28,7 +28,8 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    './static/css/tailwind.css',
+    './static/css/variables.css',
+    './static/css/utilities.css',
     './static/css/main.css'
   ],
 
@@ -178,8 +179,10 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     postcss: {
-      plugins: {
-        'autoprefixer': {}
+      preset: {
+        autoprefixer: {
+          grid: true
+        }
       }
     }
   },
